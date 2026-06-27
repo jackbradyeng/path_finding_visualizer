@@ -1,8 +1,7 @@
 package model.graphComponents
 
-import kotlin.random.Random
-
-/** An NxN matrix of cells. Cells are initialized with border walls and a randomized weight by default. */
+/** An NxN matrix of cells. Cells are initialized with border wall flags to designate boundaries. A collection of edges
+ * map cells to their traversable neighbors. */
 data class Grid(
     val width: Int,
     val height: Int,
@@ -10,9 +9,9 @@ data class Grid(
         val x = i % height
         val y = i / height
         val isWall = x == 0 || x == width - 1 || y == 0 || y == height - 1
-        Cell(x, y, isWall,
-            if (isWall) null else Random.nextDouble(0.5, 1.0))
-    }
+        Cell(x, y, isWall)
+    },
+    val edges: Map<Cell, List<Edge>> = mutableMapOf()
 ) {
 
     init {
