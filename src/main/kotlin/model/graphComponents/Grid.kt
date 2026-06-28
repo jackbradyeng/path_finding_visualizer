@@ -8,11 +8,6 @@ data class Grid(
     val width: Int,
     val height: Int,
     val graphInitializer: GraphInitializer,
-    var cells: List<Cell> = mutableListOf(),
-    var edges: Map<Cell, List<Edge>> = mutableMapOf()
-) {
-
-    init {
-        cells = graphInitializer.initializeCells(width, height)
-    }
-}
+    val cells: List<Cell> = graphInitializer.initializeCells(width, height),
+    val edges: Map<Cell, List<Edge>> = graphInitializer.initializeEdges(width, height, cells)
+)
