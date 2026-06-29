@@ -8,7 +8,7 @@ class KingsGraphInitializer : GraphInitializer {
 
     override fun initializeCells(width: Int, height: Int): List<Cell> {
 
-        require(width > 0 && height > 0) { "Width and height must be positive." }
+        require(width > 3 && height > 3) { "Width and height must be positive. No trivial graphs allowed." }
         require(width == height) { "A King's Graph must have the same width and height." }
 
         return List(width * height) { i ->
@@ -23,11 +23,6 @@ class KingsGraphInitializer : GraphInitializer {
     override fun initializeEdges(width: Int, height: Int, cells: List<Cell>): Map<Cell, List<Edge>> {
 
         val cellMap = mutableMapOf<Cell, List<Edge>>()
-
-        // a 1x1 graph has no edges
-        if (height == 1) {
-            return emptyMap()
-        }
 
         // add the vertical, horizontal, and diagonal edges for each cell in the grid
         for (cell in cells) {
@@ -67,7 +62,26 @@ class KingsGraphInitializer : GraphInitializer {
     }
 
     fun getHorizontalEdges(cell: Cell, grid: List<Cell>, width: Int, height: Int): List<Edge> {
-        return TODO("Provide the return value")
+
+        val horizontalEdges = mutableListOf<Edge>()
+
+        when (cell.x) {
+            0 -> {
+                val right = Edge(cell, grid[(cell.y * width) + 1], Random.nextInt(1, 5))
+                horizontalEdges.add(right)
+            }
+            width - 1 -> {
+                val left = Edge(cell, grid[(cell.y * width) - 1], Random.nextInt(1, 5))
+                horizontalEdges.add(left)
+            }
+            else -> {
+                val left = Edge(cell, grid[(cell.y * width) - 1], Random.nextInt(1, 5))
+                val right = Edge(cell, grid[(cell.x * width) + 1], Random.nextInt(1, 5))
+                horizontalEdges.add(left)
+                horizontalEdges.add(right)
+            }
+        }
+        return horizontalEdges
     }
 
     fun getDiagonalEdges(cell: Cell, grid: List<Cell>, width: Int, height: Int): List<Edge> {
