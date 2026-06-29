@@ -10,4 +10,12 @@ data class Grid(
     val graphInitializer: GraphInitializer,
     val cells: List<Cell> = graphInitializer.initializeCells(width, height),
     val edges: Map<Cell, List<Edge>> = graphInitializer.initializeEdges(width, height, cells)
-)
+) {
+    override fun toString(): String {
+        val cellString = cells.joinToString("\n") { cell -> cell.toString() }
+        val edgeString = edges.entries.joinToString("\n") { (cell, edgeList) ->
+            "$cell: \n" + edgeList.joinToString("\n") { edge -> edge.toString() }
+        }
+        return "Cells:\n$cellString\nEdges:\n$edgeString"
+    }
+}
