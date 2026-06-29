@@ -102,13 +102,13 @@ class KingsGraphInitializer : GraphInitializer {
 
         when (cell.x) {
             0 if cell.y == 0 -> {
-                edge = Edge(cell, grid[width - 1], Random.nextInt(1, 5))
+                edge = Edge(cell, grid[width + 1], Random.nextInt(1, 5))
             }
             width - 1 if cell.y == 0 -> {
                 edge = Edge(cell, grid[width + cell.x - 1], Random.nextInt(1, 5))
             }
             0 if cell.y == height - 1 -> {
-                edge = Edge(cell, grid[(cell.y - 1) * width - 1], Random.nextInt(1, 5))
+                edge = Edge(cell, grid[(cell.y - 1) * width + 1], Random.nextInt(1, 5))
             }
             width - 1 if cell.y == height - 1 -> {
                 edge = Edge(cell, grid[(cell.y - 1) * width + cell.x - 1], Random.nextInt(1, 5))
