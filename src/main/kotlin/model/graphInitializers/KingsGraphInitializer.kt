@@ -28,7 +28,7 @@ class KingsGraphInitializer : GraphInitializer {
         for (cell in cells) {
             val edges: MutableList<Edge> = mutableListOf()
             edges.addAll(getVerticalEdges(cell, cells, width, height))
-            edges.addAll(getHorizontalEdges(cell, cells, width, height))
+            edges.addAll(getHorizontalEdges(cell, cells, width))
             edges.addAll(getDiagonalEdges(cell, cells, width, height))
             cellMap[cell] = edges
         }
@@ -61,7 +61,7 @@ class KingsGraphInitializer : GraphInitializer {
         return verticalEdges
     }
 
-    fun getHorizontalEdges(cell: Cell, grid: List<Cell>, width: Int, height: Int): List<Edge> {
+    fun getHorizontalEdges(cell: Cell, grid: List<Cell>, width: Int): List<Edge> {
 
         val horizontalEdges = mutableListOf<Edge>()
 
@@ -71,12 +71,12 @@ class KingsGraphInitializer : GraphInitializer {
                 horizontalEdges.add(right)
             }
             width - 1 -> {
-                val left = Edge(cell, grid[(cell.y * width) - 1], Random.nextInt(1, 5))
+                val left = Edge(cell, grid[(cell.y * width) + cell.x - 1], Random.nextInt(1, 5))
                 horizontalEdges.add(left)
             }
             else -> {
-                val left = Edge(cell, grid[(cell.y * width) - 1], Random.nextInt(1, 5))
-                val right = Edge(cell, grid[(cell.x * width) + 1], Random.nextInt(1, 5))
+                val left = Edge(cell, grid[(cell.y * width) + cell.x - 1], Random.nextInt(1, 5))
+                val right = Edge(cell, grid[(cell.y * width) + cell.x + 1], Random.nextInt(1, 5))
                 horizontalEdges.add(left)
                 horizontalEdges.add(right)
             }
