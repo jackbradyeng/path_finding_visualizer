@@ -6,6 +6,8 @@ import kotlin.random.Random
 
 class KingsGraphInitializer : GraphInitializer {
 
+    /** Creates a grid of cells corresponding to a King's graph. Width and height must be equal and at least 3x3 in
+     * dimensions. No trivial graphs - i.e. 1x1 & 2x2 - are permitted. */
     override fun initializeCells(width: Int, height: Int): List<Cell> {
 
         require(width > 3 && height > 3) { "Width and height must be positive. No trivial graphs allowed." }
@@ -26,15 +28,16 @@ class KingsGraphInitializer : GraphInitializer {
         // add the vertical, horizontal, and diagonal edges for each cell in the grid
         for (cell in cells) {
             val edges: MutableList<Edge> = mutableListOf()
-            edges.addAll(getVerticalEdges(cell, cells, width, height))
-            edges.addAll(getHorizontalEdges(cell, cells, width))
-            edges.addAll(getDiagonalEdges(cell, cells, width, height))
+            edges.addAll(findVerticalEdges(cell, cells, width, height))
+            edges.addAll(findHorizontalEdges(cell, cells, width))
+            edges.addAll(findDiagonalEdges(cell, cells, width, height))
             cellMap[cell] = edges
         }
         return cellMap
     }
 
-    fun getVerticalEdges(cell: Cell, grid: List<Cell>, width: Int, height: Int): List<Edge> {
+    /** Finds all the vertical edges in a King's graph. */
+    fun findVerticalEdges(cell: Cell, grid: List<Cell>, width: Int, height: Int): List<Edge> {
 
         val verticalEdges = mutableListOf<Edge>()
 
@@ -60,7 +63,8 @@ class KingsGraphInitializer : GraphInitializer {
         return verticalEdges
     }
 
-    fun getHorizontalEdges(cell: Cell, grid: List<Cell>, width: Int): List<Edge> {
+    /** Finds all the horizontal edges in a King's graph. */
+    fun findHorizontalEdges(cell: Cell, grid: List<Cell>, width: Int): List<Edge> {
 
         val horizontalEdges = mutableListOf<Edge>()
 
@@ -84,19 +88,19 @@ class KingsGraphInitializer : GraphInitializer {
     }
 
     /** Finds all the diagonal edges in a King's graph. */
-    fun getDiagonalEdges(cell: Cell, grid: List<Cell>, width: Int, height: Int): List<Edge> {
+    fun findDiagonalEdges(cell: Cell, grid: List<Cell>, width: Int, height: Int): List<Edge> {
 
         val diagonalEdges = mutableListOf<Edge>()
-        diagonalEdges.addAll(getCornerDiagonalEdges(cell, grid, width, height))
-        diagonalEdges.addAll(getSideDiagonalEdges(cell, grid, width, height))
-        diagonalEdges.addAll(getTopAndBottomDiagonalEdges(cell, grid, width, height))
-        diagonalEdges.addAll(getInnerDiagonalEdges(cell, grid, width, height))
+        diagonalEdges.addAll(findCornerDiagonalEdges(cell, grid, width, height))
+        diagonalEdges.addAll(findSideDiagonalEdges(cell, grid, width, height))
+        diagonalEdges.addAll(findTopAndBottomDiagonalEdges(cell, grid, width, height))
+        diagonalEdges.addAll(findInnerDiagonalEdges(cell, grid, width, height))
         return diagonalEdges
     }
 
     /** Finds the diagonal edges of all corner cells in the graph. A King's graph will have four corner cells with
      * three neighbours each. Therefore, they will only have a single diagonal edge. */
-    fun getCornerDiagonalEdges(cell: Cell, grid: List<Cell>, width: Int, height: Int): List<Edge> {
+    fun findCornerDiagonalEdges(cell: Cell, grid: List<Cell>, width: Int, height: Int): List<Edge> {
 
         var edge: Edge? = null
 
@@ -119,7 +123,7 @@ class KingsGraphInitializer : GraphInitializer {
 
     /** Finds the diagonal edges of all side cells that are not in the corners of the graph. Each side cell in a King's
      * graph will have five neighbours. */
-    fun getSideDiagonalEdges(cell: Cell, grid: List<Cell>, width: Int, height: Int): List<Edge> {
+    fun findSideDiagonalEdges(cell: Cell, grid: List<Cell>, width: Int, height: Int): List<Edge> {
 
         var below: Edge? = null
         var above: Edge? = null
@@ -139,7 +143,7 @@ class KingsGraphInitializer : GraphInitializer {
 
     /** Finds the diagonal edges of all top and bottom cells that are not in the corners of the graph. Each top and/or
      * bottom cell in a King's graph will have five neighbours. */
-    fun getTopAndBottomDiagonalEdges(cell: Cell, grid: List<Cell>, width: Int, height: Int): List<Edge> {
+    fun findTopAndBottomDiagonalEdges(cell: Cell, grid: List<Cell>, width: Int, height: Int): List<Edge> {
         var left: Edge? = null
         var right: Edge? = null
 
@@ -158,7 +162,7 @@ class KingsGraphInitializer : GraphInitializer {
 
     /** Finds the diagonal edges of all inner cells. i.e. all cells not located at the border of the graph. An inner
      * cell in a King's graph will have eight neighbours. */
-    fun getInnerDiagonalEdges(cell: Cell, grid: List<Cell>, width: Int, height: Int): List<Edge> {
+    fun findInnerDiagonalEdges(cell: Cell, grid: List<Cell>, width: Int, height: Int): List<Edge> {
 
         var upperLeft: Edge? = null
         var upperRight: Edge? = null
