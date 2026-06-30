@@ -14,8 +14,7 @@ class KingsGraphInitializer : GraphInitializer {
         return List(width * height) { i ->
             val x = i % height
             val y = i / height
-            val isWall = x == 0 || x == width - 1 || y == 0 || y == height - 1
-            Cell(x, y, isWall)
+            Cell(x, y)
         }
     }
 
