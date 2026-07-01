@@ -9,7 +9,9 @@ data class Grid(
     val height: Int,
     val graphInitializer: GraphInitializer,
     val cells: List<Cell> = graphInitializer.initializeCells(width, height),
-    val edges: Map<Cell, List<Edge>> = graphInitializer.initializeEdges(width, height, cells)
+    val edges: Map<Cell, List<Edge>> = graphInitializer.initializeEdges(width, height, cells),
+    val start: Cell = graphInitializer.initializeStart(cells),
+    val end: Cell = graphInitializer.initializeEnd(cells)
 ) {
     override fun toString(): String {
         val cellString = cells.joinToString("\n") { cell -> cell.toString() }
