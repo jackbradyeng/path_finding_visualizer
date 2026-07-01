@@ -20,6 +20,16 @@ class KingsGraphInitializer : GraphInitializer {
         }
     }
 
+    /** Since a grid's cells are initialized sequentially, the starting cell is simply the first in the list. */
+    override fun initializeStart(cells: List<Cell>): Cell {
+        return cells.first()
+    }
+
+    /** Since a grid's cells are initialized sequentially, the ending cell is simply the last in the list. */
+    override fun initializeEnd(cells: List<Cell>): Cell {
+        return cells.last()
+    }
+
     /** Returns a map of all edges in the graph to their corresponding cells. */
     override fun initializeEdges(width: Int, height: Int, cells: List<Cell>): Map<Cell, List<Edge>> {
 
